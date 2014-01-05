@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--*                                    *-->
+<!--* Generated from MathBook XML source *-->
+<!--*                                    *-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIMS DMG Exercises 06</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['\\(','\\)']]},
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                         },
+        TagSide: "right",
+        TagIndent: ".8em"
+    },
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script src="http://sagecell.sagemath.org/static/jquery.min.js"></script><script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script><script>
+$(function () {
+    // Make *any* div with class 'sage-compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.sage-compute',
+                           linked: true,
+                           evalButtonText: 'Evaluate'});
+});
+    </script><script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script><link href="http://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://aimath.org/knowl.js"></script><link href="http://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="mathbook.css">
+</head>
+<body>
+<div style="display:none;">
+            \(\)
+            </div>
+<div class="article">
+<div class="heading">
+<div class="title">AIMS DMG Exercises 06</div>
+<div class="event">AIMS 2013-14: Designs, Matroids and Graphs</div>
+<div class="authorgroup">
+<div class="author-info">
+<div class="author-name">Rob Beezer</div>
+<div class="author-department"></div>
+<div class="author-institution">University of Puget Sound</div>
+<div class="author-email"></div>
+</div>
+<div class="author-info">
+<div class="author-name">Nancy Neudauer</div>
+<div class="author-department"></div>
+<div class="author-institution">Pacific University</div>
+<div class="author-email"></div>
+</div>
+</div>
+<div class="date">January 6, 2014</div>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 1 </span>Consider the system of equations below.  When you are asked for a solution, you can expect “nice” entries, so if you get a mess of fractions, go back and see if you entered the problem properly. This problem is <em>not</em> over a finite field (like they were in lecture).  Instead use the rational numbers as your field, since Sage will do these computations exactly.  This is <tt class="code">QQ</tt> in Sage.\begin{align}
+  x_{1} - 3x_{2} + 8x_{3} +  x_{4}          + 2x_{6}&amp;=  7\notag\\
+-3x_{1} + 2x_{2} + 4x_{3} +  x_{4} - 7x_{5} + 2x_{6}&amp;=  9\notag\\
+ -x_{1} -  x_{2} + 8x_{3} +  x_{4} - 4x_{5} + 2x_{6}&amp;= 11\notag\\
+ 2x_{1} - 4x_{2} + 8x_{3} +  x_{4} + 2x_{5} + 2x_{6}&amp;=  5\notag\\
+ -x_{1} +  x_{2} -  x_{4} - 2x_{5}          - 2x_{6}&amp;=  5\notag
+\end{align}<ol>
+<li>Use a coefficient matrix and a vector of constants, along with Sage's <tt class="code">.solve_right()</tt> command to find a single solution to the system.  While this system has infinitely many solutions, your answer should be <em>the one</em> solution Sage produces with the indicated commands, not just <em>any</em> solution you can find by any method you wish.</li>
+<li>Check that your solution is correct by multiplying the solution vector by the coefficient matrix and testing equality (<tt class="code">==</tt> in Sage/Python) with the vector of constants.</li>
+<li>Check that your solution is correct by using the entries of the solution vector to form a linear combination of the columns of the coefficient matrix.  Then test equality of this linear combination with the vector of constants.</li>
+<li>Build three different solutions to the system above by adding <em>diverse</em> elements of the null space of the coefficient matrix (<tt class="code">.right_kernel()</tt> in Sage).</li>
+<li>Construct a new vector of constants for the system (i.e. the right-hand sides of the equations) so the system has no solution.  Do not guess at such a vector, but instead, <em>explain</em> an approach that uses the column space of the coefficient matrix.</li>
+</ol></p>
+<p>To receive full marks you should have all of the computations requested.  There should be some variety in the four solutions, and the final part should contain a well-written explanation of your method, and not just a single vector.</p>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 2 </span>Vector spaces with a field of scalars that is infinite will typically have infinitely many bases.  Sage can construct two bases for the null space of a matrix (which, of course, is a vector space).  The default has zeros and ones in the first entries of the basis vectors, while the second, more natural basis, has zeros and ones in the later entries of the basis vectors.  The second is obtained with the <tt class="code">basis='pivot'</tt> keyword.</p>
+<p>The commands below illustrate how to obtain these two bases.  <em>NOTE:</em>  Due to a bug in Sage (<i class="foreign">mea culpa</i>), once you compute a right kernel of a matrix, Sage will remember it and it cannot be changed until you change the matrix.  So make a copy of the matrix, compute the bases and save them in new variables before proceeding.</p>
+<div class="sage-compute"><script type="text/x-sage">A = matrix(QQ, [
+[-247, 207, 9, -692, -1155, 9, -692],
+[-152, 128, 6, -426, -712, 6, -426],
+[46, -39, -2, 129, 216, -2, 129],
+[95, -79, -3, 266, 443, -3, 266],
+[-30, 25, 1, -84, -140, 1, -84]
+])
+B = copy(A)
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">eb = A.right_kernel().basis(); eb
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">pb = B.right_kernel(basis='pivot').basis(); pb
+</script></div>
+<p>Your goal in this problem is to “exchange” vectors to convert one basis into the other, you can choose either one to be “first”.  More specifically, start with one basis and remove a vector.  Now you should be able to add a single vector from the second basis to this set, and return to a basis of the null space.  (This step could take some trial-and-error work since you cannot pick the additional vector just anyway you wish. Use Sage effectively to help you.)  By four such exchanges, you will complete the conversion.</p>
+<p>For full marks, you should list all five bases (start, finish, and three intermediate) and clearly indicate which vector you removed and which you added.  Your submitted work should show a computation at each stage that verifies that your four vectors really are a basis of the null space. The Sage <tt class="code">span()</tt> constructor could be useful for doing this,</p>
+</div>
+</div>
+</body>
+</html>
