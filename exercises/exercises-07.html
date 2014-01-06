@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--*                                    *-->
+<!--* Generated from MathBook XML source *-->
+<!--*                                    *-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIMS DMG Exercises 07</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['\\(','\\)']]},
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                         },
+        TagSide: "right",
+        TagIndent: ".8em"
+    },
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script src="http://sagecell.sagemath.org/static/jquery.min.js"></script><script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script><script>
+$(function () {
+    // Make *any* div with class 'sage-compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.sage-compute',
+                           linked: true,
+                           evalButtonText: 'Evaluate'});
+});
+    </script><script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script><link href="http://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://aimath.org/knowl.js"></script><link href="http://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="mathbook.css">
+</head>
+<body>
+<div style="display:none;">
+            \(\)
+            </div>
+<div class="article">
+<div class="heading">
+<div class="title">AIMS DMG Exercises 07</div>
+<div class="event">AIMS 2013-14: Designs, Matroids and Graphs</div>
+<div class="authorgroup">
+<div class="author-info">
+<div class="author-name">Rob Beezer</div>
+<div class="author-department"></div>
+<div class="author-institution">University of Puget Sound</div>
+<div class="author-email"></div>
+</div>
+<div class="author-info">
+<div class="author-name">Nancy Neudauer</div>
+<div class="author-department"></div>
+<div class="author-institution">Pacific University</div>
+<div class="author-email"></div>
+</div>
+</div>
+<div class="date">January 7, 2014</div>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 1 </span>Build several interesting designs in Sage.  Try <tt class="code">designs.(tab)</tt> to see some possibilities.  For each design, do the following:
+            <ol>
+<li>The method <tt class="code">.parameters(t=2)</tt> will report the values of \(t, v, k, \lambda\) when the design is considered as a \(2\)-design.</li>
+<li>Compute the incidence matrix. If you named your design <tt class="code">D</tt>, then try <tt class="code">D.(tab)</tt> to help locate a method that might do this for you.  Read the help about viewing large matrices (more than 20 rows or 20 columns).</li>
+<li>If you named your incidence matrix <tt class="code">A</tt>, then compute the product of the incidence matrix with its transpose, \(AA^t\).  Again, <tt class="code">A.(tab)</tt> might help you see how to do this.</li>
+<li>Compute the parameters of the design again, only now consider the design as a \(1\)-design, so pass in <tt class="code">t=1</tt>.</li>
+</ol></p>
+<p>You should now see a pattern to the matrix \(AA^t\).  (Much of mathematics is about recognizing patterns.)  Explain what you see with a carefully-written paragraph, possibly using symbols to explain yourself.  Go beyond just commenting on certain numbers showing up in certain places.  How are the parameters of a design different when considered as a \(2\)-design versus a \(1\)-design?  Using terms that describe the design, just what type of computation are we doing when we form \(AA^t\)?  A complete answer will show that you understand the answers to both of these questions.  Remember, a <tt class="code">shift-click</tt> on a transient blue bar will bring up a \(\LaTeX\)-enabled word processor.  Use it.</p>
+<p>To receive full marks submit evidence in your worksheet that you have considered several designs (steps 1-4 above) before formulating your ideas.  Your paragraph about your observations needs to be clearly written, so that another student reading it would understand what you have discovered, and it should be clear that you can answer the two questions above.</p>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 2 </span>The cube graph, \(Q_3\) is the skeleton of a cube.  The next cell will create the graph, relabel its vertices with integers \(0\) through \(7\), and draw a resonably nice plot.</p>
+<div class="sage-compute"><script type="text/x-sage">Q = graphs.CubeGraph(3)
+Q.relabel()
+Q.plot(layout='spring')
+</script></div>
+<p>Now we provide two spanning trees of \(Q_3\), \(T_0\) and \(T_n\) (we do not know what \(n\) is yet).  We check that they are really trees, are spanning trees, and are subgraphs.  Read the help on <tt class="code">.is_subgraph()</tt> to understand the order of the graphs and the use of the <tt class="code">induced</tt> keyword.</p>
+<div class="sage-compute"><script type="text/x-sage">T0 = Graph([(0,1),(1,5),(0,2),(2,3),(3,7),(0,4),(4,6)])
+TN = Graph([(0,2),(2,3),(1,3),(3,7),(6,7),(5,7),(4,5)])
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">T0.is_tree(), T0.num_verts() == Q.num_verts(), T0.is_subgraph(Q, induced=False)
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">TN.is_tree(), TN.num_verts() == Q.num_verts(), TN.is_subgraph(Q, induced=False)
+</script></div>
+<p>Your goal in this problem is to “exchange” edges to convert the one spanning tree into the other.  More specifically, add an edge to a spanning tree, creating a cycle, and then remove an edge of the cycle to return to a (different) spanning tree.  So your answer will be a list of trees, \(T_0, T_1, T_2, \dots, T_{n-1}, T_n\), so that \(T_i\) can be obtained from \(T_{i-1}\) by an exchange of edges.</p>
+<p>The symmetric difference of the edge sets of \(T_0\) and \(T_n\) might help you predict what \(n\) is.  It might also be helpful in deciding exactly which edges to exchange.</p>
+<div class="sage-compute"><script type="text/x-sage">E0 = Set(T0.edges(labels=False))
+EN = Set(TN.edges(labels=False))
+E0.symmetric_difference(EN)
+</script></div>
+<p>Construct your trees as Sage graphs.  Use Sage to verify that they are spanning trees.  Verify that each adjacent pair in the list differs by an edge exchange by verifying that the symmetric difference of the edge sets of the two trees has cardinality \(2\).  (Include \(T_0\) and \(T_n\) in this check.)  Python list comprehensions are a compact way to execute and present these checks.</p>
+<p>Full marks will be given for a correct sequence of trees, and verification of their correctness with Sage commands.</p>
+<p>Extra credit: what is the maximum number of edge exchanges necessary to convert between two spanning trees of \(Q_3\)?  In other words, how big could \(n\) be (if the trees were different)?  Give an argument for your answer.</p>
+</div>
+</div>
+</body>
+</html>
