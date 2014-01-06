@@ -57,8 +57,10 @@ $(function () {
 </div>
 <div class="section">
 <div class="heading">
-<span class="number">1</span> <span class="title">Linear Algebra over $GF(7)$, Sage Style</span>
+<span class="number">1</span> <span class="title">Linear Algebra over \(GF(7)\), Sage Style</span>
 </div>
+<div class="sage-compute"><script type="text/x-sage">
+</script></div>
 <p>Chalkboard example, reprised.  Note how we set the field of scalars.</p>
 <div class="sage-compute"><script type="text/x-sage">F = FiniteField(7)
 A = matrix(F, 3, 3, [[1, 0, 1], [5, 1, 3], [2, 6, 5]])
@@ -66,23 +68,23 @@ b = vector(F, [2, 5, 1])
 A, b
 </script></div>
 <p>Augment and row-reduce for solution.</p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 <p>Check solution</p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 <p>Grab columns (<tt class="code">.columns()</tt>), verify linear combination.</p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 <p>Coefficient matrix is nonsingular, so full rank, unique solutions, etc.</p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 <p>Make the relevant vector space (<tt class="code">V</tt>), so we can test a set of vectors for linear independence.  Columns of coefficient matrix are linearly independent (empty list indicates no relations of linear dependence):</p>
 <div class="sage-compute"><script type="text/x-sage">V = F^3
 V.linear_dependence(A.columns())
 </script></div>
 <p>Try eigenvalues directly, then via definitions and characteristic polynomial.</p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 </div>
 <div class="section">
@@ -111,19 +113,19 @@ B
 <div class="sage-compute"><script type="text/x-sage">B.solve_right(d)
 </script></div>
 <p>How do we explain this different behavior?</p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 <p>$c$ and $d$, inside and outside column space? By hand, first.</p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 <p>$c$ and $d$, inside and outside column space? With Sage membership, second.</p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 <p>Infinitely many solutions for $c$, find them with null space.</p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 <p></p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 </div>
 <div class="section">
@@ -144,13 +146,13 @@ B
 ])
 </script></div>
 <p>Characteristic polynomial, factored.</p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 <p><tt class="code">.eigenvalues()</tt>, <tt class="code">.eigenspaces_right()</tt>, <tt class="code">.eigenmatrix_right()</tt></p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 <p>Perform similarity check with output of eigenmatrix method.</p>
-<div class="sage-compute"><script type="text/x-sage">X
+<div class="sage-compute"><script type="text/x-sage">
 </script></div>
 </div>
 </div>
