@@ -58,7 +58,7 @@ $(function () {
 <div class="exercise">
 <a class="label" name=""></a><p><span class="exercise-header">Exercise 1 </span>Build several interesting designs in Sage.  Try <tt class="code">designs.(tab)</tt> to see some possibilities.  For each design, do the following:
             <ol>
-<li>The method <tt class="code">.parameters(t=2)</tt> will report the values of \(t, v, k, \lambda\) when the design is considered as a \(2\)-design.</li>
+<li>The method <tt class="code">.parameters(t=2)</tt> will report the values of \(t, v, k, \lambda\) when the design is considered as a \(2\)-design.  (It is possible for a design to have a larger value of \(t\) than \(2\), but if so, we can prove that it will also be a \(2\)-design but with different parameters.)</li>
 <li>Compute the incidence matrix. If you named your design <tt class="code">D</tt>, then try <tt class="code">D.(tab)</tt> to help locate a method that might do this for you.  Read the help about viewing large matrices (more than 20 rows or 20 columns).</li>
 <li>If you named your incidence matrix <tt class="code">A</tt>, then compute the product of the incidence matrix with its transpose, \(AA^t\).  Again, <tt class="code">A.(tab)</tt> might help you see how to do this.</li>
 <li>Compute the parameters of the design again, only now consider the design as a \(1\)-design, so pass in <tt class="code">t=1</tt>.</li>
