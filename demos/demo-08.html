@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--*                                    *-->
+<!--* Generated from MathBook XML source *-->
+<!--*                                    *-->
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['\\(','\\)']]},
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                         },
+        TagSide: "right",
+        TagIndent: ".8em"
+    },
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script src="http://sagecell.sagemath.org/static/jquery.min.js"></script><script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script><script>
+$(function () {
+    // Make *any* div with class 'sage-compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.sage-compute',
+                           linked: true,
+                           evalButtonText: 'Evaluate'});
+});
+    </script><script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script><link href="http://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://aimath.org/knowl.js"></script><script src="http://mathbook.staging.michaelxdubois.com/master/js/ScrollingNav.js"></script><script src="http://mathbook.staging.michaelxdubois.com/master/js/Mathbook.js"></script><link href="http://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/beezer_a.css" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/section2_files/beezer-addon1b.css" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/section2_files/beezer-addon2b.css" rel="stylesheet" type="text/css">
+<link href="http://mathbook.staging.michaelxdubois.com/master/stylesheets/mathbook-modern.css" rel="stylesheet" type="text/css">
+<link href="http://mathbook.staging.michaelxdubois.com/master/stylesheets/icons.css" rel="stylesheet" type="text/css">
+</head>
+<body class="has-toc">
+<header id="masthead"><div class="banner"><div class="container">
+<h1 id="title"><span id="title-content">AIMS DMG Sage Demonstration 08</span></h1>
+<p id="subtitle"><span id="subtitle-content">(Authors or proper subtitle)</span></p>
+</div></div>
+<div id="navbar"><div class="container"><div id="toc-navbar-item" class="navbar-item">
+<h2 class="navbar-item-text icon-navicon-round ">Table of Contents</h2>
+<nav id="toc"></nav>
+</div></div></div></header><div class="page"><main class="main"><div id="content">
+<div style="display:none;">
+            \(\)
+            </div>
+<div class="article">
+<div class="heading">
+<div class="title">AIMS DMG Sage Demonstration 08</div>
+<div class="event">AIMS 2013-14: Designs, Matroids and Graphs</div>
+<div class="authorgroup">
+<div class="author-info">
+<div class="author-name">Rob Beezer</div>
+<div class="author-department"></div>
+<div class="author-institution">University of Puget Sound</div>
+<div class="author-email"></div>
+</div>
+<div class="author-info">
+<div class="author-name">Nancy Neudauer</div>
+<div class="author-department"></div>
+<div class="author-institution">Pacific University</div>
+<div class="author-email"></div>
+</div>
+</div>
+<div class="date">January 8, 2014</div>
+</div>
+<section class="section" id="section-1"><div class="heading"><h1>
+<span class="type">Section</span> <span class="counter">1</span> <span class="title">Matroids in Sage</span>
+</h1></div>
+<p>Constructors.  How do we make matroids in Sage?  Much the same way we make anything in Sage, with a “constructor”.  A function that creates the object we wish to have.  In this case we use <tt class="code">Matroid()</tt> which is quite intelligent about handling the input it receives.</p>
+<p>We are going to build a binary matroid, the points are column vectors with entries from \(GF(2)\), which we collect for convenience in a matrix.</p>
+<div class="sage-compute"><script type="text/x-sage">mat = Matrix(GF(2), [
+[1,0,0,0,1,1,0,1],
+[0,1,0,0,1,0,1,1],
+[0,0,1,0,0,1,1,1],
+[0,0,0,1,1,1,1,1]
+])
+mat
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">M = Matroid(mat)
+M
+</script></div>
+<p>Let's run down the most basic properties of a matroid for this example.</p>
+<div class="sage-compute"><script type="text/x-sage">M.groundset()
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">M.groundset_list()
+</script></div>
+<p>The bases would be next.</p>
+<div class="sage-compute"><script type="text/x-sage">M.bases()
+</script></div>
+<p>What is an iterator? A useful way to avoid a “combinatorial” explosion!</p>
+<div class="sage-compute"><script type="text/x-sage">bit = M.bases()
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">for b in bit:
+   print b
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">list(bit)
+</script></div>
+<p>How about a list of bases without the “frozenset” stuff?  Use a list comprehension and covert the sets to lists.</p>
+<div class="sage-compute"><script type="text/x-sage">[list(b) for b in bit]
+</script></div>
+<p>The rank of the matroid is obvious now, but Sage knows it too.</p>
+<div class="sage-compute"><script type="text/x-sage">M.rank()
+</script></div>
+<p>The circuits — the minimally dependent sets.  An iterator again.  Check a few of these back against the original matrix.</p>
+<div class="sage-compute"><script type="text/x-sage">cit = M.circuits()
+[list(c) for c in cit]
+</script></div>
+<p>Even faster, in one line, but as frozen sets.</p>
+<div class="sage-compute"><script type="text/x-sage">list(M.circuits())
+</script></div>
+<p>We can find all the independent sets of a given size.</p>
+<div class="sage-compute"><script type="text/x-sage">M.independent_r_sets(r=2)
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">M.independent_r_sets(r=5)
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">
+</script></div></section><section class="section" id="section-2"><div class="heading"><h1>
+<span class="type">Section</span> <span class="counter">2</span> <span class="title">More Matroids</span>
+</h1></div>
+<p>We just built a matroid from scratch, Sage has many more available. Use tab-completion on <tt class="code">matroids.</tt> or <tt class="code">matroids.named_matroids.</tt>.</p>
+<div class="sage-compute"><script type="text/x-sage">matroids.
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">matroids.named_matroids.
+</script></div></section>
+</div>
+</div></main></div>
+</body>
+</html>

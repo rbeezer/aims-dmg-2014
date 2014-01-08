@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--*                                    *-->
+<!--* Generated from MathBook XML source *-->
+<!--*                                    *-->
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['\\(','\\)']]},
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                         },
+        TagSide: "right",
+        TagIndent: ".8em"
+    },
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script src="http://sagecell.sagemath.org/static/jquery.min.js"></script><script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script><script>
+$(function () {
+    // Make *any* div with class 'sage-compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.sage-compute',
+                           linked: true,
+                           evalButtonText: 'Evaluate'});
+});
+    </script><script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script><link href="http://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://aimath.org/knowl.js"></script><script src="http://mathbook.staging.michaelxdubois.com/master/js/ScrollingNav.js"></script><script src="http://mathbook.staging.michaelxdubois.com/master/js/Mathbook.js"></script><link href="http://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/beezer_a.css" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/section2_files/beezer-addon1b.css" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/section2_files/beezer-addon2b.css" rel="stylesheet" type="text/css">
+<link href="http://mathbook.staging.michaelxdubois.com/master/stylesheets/mathbook-modern.css" rel="stylesheet" type="text/css">
+<link href="http://mathbook.staging.michaelxdubois.com/master/stylesheets/icons.css" rel="stylesheet" type="text/css">
+</head>
+<body class="has-toc">
+<header id="masthead"><div class="banner"><div class="container">
+<h1 id="title"><span id="title-content">AIMS DMG Exercises 08</span></h1>
+<p id="subtitle"><span id="subtitle-content">(Authors or proper subtitle)</span></p>
+</div></div>
+<div id="navbar"><div class="container"><div id="toc-navbar-item" class="navbar-item">
+<h2 class="navbar-item-text icon-navicon-round ">Table of Contents</h2>
+<nav id="toc"></nav>
+</div></div></div></header><div class="page"><main class="main"><div id="content">
+<div style="display:none;">
+            \(\)
+            </div>
+<div class="article">
+<div class="heading">
+<div class="title">AIMS DMG Exercises 08</div>
+<div class="event">AIMS 2013-14: Designs, Matroids and Graphs</div>
+<div class="authorgroup">
+<div class="author-info">
+<div class="author-name">Rob Beezer</div>
+<div class="author-department"></div>
+<div class="author-institution">University of Puget Sound</div>
+<div class="author-email"></div>
+</div>
+<div class="author-info">
+<div class="author-name">Nancy Neudauer</div>
+<div class="author-department"></div>
+<div class="author-institution">Pacific University</div>
+<div class="author-email"></div>
+</div>
+</div>
+<div class="date">January 8, 2014</div>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 1 </span>The uniform matroid \(U(r, n)\), with parameters \(r\) and \(n\), has \(n\) elements in the ground set and the bases are all the subsets of size \(r\).  It can be created in Sage with the constructor <tt class="code">matroids.Uniform(r, n)</tt>.</p>
+<p>Build the uniform matroid \(U(3, 7)\) in Sage and compute the following information about the matroid.  Your ouput should be sanitized so there are no mentions of “frozenset”s.<ol>
+<li>The ground set.</li>
+<li>The bases, and the number of bases.</li>
+<li>The circuits, and the number of circuits.</li>
+<li>The rank.</li>
+<li>The rank of each of the sets \(\{1,5\}\), \(\{2,3,4\}\), \(\{0,1,5,6,\}\).</li>
+<li>The independent sets of size \(2\) and the independent sets of size \(4\).</li>
+</ol></p>
+<p>Based on your computations above, and perhaps some experiments with other uniform matroids (try different parameters than \(r=3\) and \(n=7\)) formulate conjectures about the properties of a general uniform matroid \(U(r, n)\).  Provide a short (one sentence) explanation of each conjecture.<ol>
+<li>The number of bases.</li>
+<li>The number of circuits.</li>
+<li>The rank of the matroid.</li>
+<li>The rank of an arbitrary subset.</li>
+<li>The number of independent sets of size \(r-1\).</li>
+</ol></p>
+<p>To receive full marks submit the computations for \(U(3,7)\) in a neat and organized presentation.  Also, provide the right general conjectures with clear explanations.</p>
+<div class="sage-compute"><script type="text/x-sage">
+</script></div>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 2 </span>A graphic matroid is created from a graph.  The elements of the matroid are the edges of the graph.  This exercise asks you to explore the basics of these matroids with a non-trivial example.  We will use a former “Graph of the Day” to build the matroid.</p>
+<div class="sage-compute"><script type="text/x-sage">P = graphs.PetersenGraph()
+G = Matroid(P)
+G
+</script></div>
+<p>Compute various properties of the matroid, much as in the previous exercise.</p>
+<p>Since the elements of the matroids are edges of the graph, we can visualize any set of elements as an edge-induced subgraph of the graph.  Here is an example of how to do this.</p>
+<div class="sage-compute"><script type="text/x-sage">aset =[(1,6), (6,8), (3,8)]
+P.subgraph(edges=aset).plot()
+</script></div>
+<p>Compute the bases of the matroid and plot several of them.  Describe what you notice about them.</p>
+<p>Compute the circuits of the matroid and plot several of them.  Describe what you notice about them.</p>
+<p>This matroid is <b class="term">representable</b>.  This means there is a matrix that can be used to form a vector matroid that has exactly the same properties and characteristics (we would say the graphic matroid and the vector matroid are “isomorphic”).</p>
+<p>Find this matrix with the matroid method <tt class="code">.representation()</tt>.  (As an aside, this matrix is actually an adjusted vertex-edge incidence matrix of the graph.)  This matrix will work as a representation over any field (where we would adjust \(-1\) accordingly).</p>
+<p>This representation matrix has an interesting property.  If you take any square submatrix, the determinant takes on just a few limited values.  Your job is to use Sage to experiment and determine all possible values for these determinants.  Let us suppose you have found the matrix for the representation and have called it <tt class="code">A</tt>.  Then the following will extract rows <tt class="code">0</tt> through <tt class="code">8</tt> and columns <tt class="code">2</tt> through <tt class="code">10</tt> to make a \(9\times 9\) submatrix and then compute its determinant.</p>
+<div class="sage-compute"><script type="text/x-sage">det(A[0:9, 2:11])
+</script></div>
+<p>Full marks will be given for complete and careful explanations of responses to the three questions — the nature of the bases, the nature of the circuits and the possible determinants.  In each case include enough code and sample output to demonstrate that you have experimented fully in Sage to arrive at your conclusions.</p>
+</div>
+</div>
+</div></main></div>
+</body>
+</html>
