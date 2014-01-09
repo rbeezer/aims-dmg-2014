@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--*                                    *-->
+<!--* Generated from MathBook XML source *-->
+<!--*                                    *-->
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['\\(','\\)']]},
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                         },
+        TagSide: "right",
+        TagIndent: ".8em"
+    },
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script src="http://sagecell.sagemath.org/static/jquery.min.js"></script><script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script><script>
+$(function () {
+    // Make *any* div with class 'sage-compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.sage-compute',
+                           linked: true,
+                           evalButtonText: 'Evaluate'});
+});
+    </script><script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script><link href="http://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://aimath.org/knowl.js"></script><script src="http://mathbook.staging.michaelxdubois.com/master/js/ScrollingNav.js"></script><script src="http://mathbook.staging.michaelxdubois.com/master/js/Mathbook.js"></script><link href="http://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/beezer_a.css" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/section2_files/beezer-addon1b.css" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/section2_files/beezer-addon2b.css" rel="stylesheet" type="text/css">
+<link href="http://mathbook.staging.michaelxdubois.com/master/stylesheets/mathbook-modern.css" rel="stylesheet" type="text/css">
+<link href="http://mathbook.staging.michaelxdubois.com/master/stylesheets/icons.css" rel="stylesheet" type="text/css">
+</head>
+<body class="has-toc">
+<header id="masthead"><div class="banner"><div class="container">
+<h1 id="title"><span id="title-content">AIMS DMG Sage Demonstration 09</span></h1>
+<p id="subtitle"><span id="subtitle-content">(Authors or proper subtitle)</span></p>
+</div></div>
+<div id="navbar"><div class="container"><div id="toc-navbar-item" class="navbar-item">
+<h2 class="navbar-item-text icon-navicon-round ">Table of Contents</h2>
+<nav id="toc"></nav>
+</div></div></div></header><div class="page"><main class="main"><div id="content">
+<div style="display:none;">
+            \(\)
+            </div>
+<div class="article">
+<div class="heading">
+<div class="title">AIMS DMG Sage Demonstration 09</div>
+<div class="event">AIMS 2013-14: Designs, Matroids and Graphs</div>
+<div class="authorgroup">
+<div class="author-info">
+<div class="author-name">Rob Beezer</div>
+<div class="author-department"></div>
+<div class="author-institution">University of Puget Sound</div>
+<div class="author-email"></div>
+</div>
+<div class="author-info">
+<div class="author-name">Nancy Neudauer</div>
+<div class="author-department"></div>
+<div class="author-institution">Pacific University</div>
+<div class="author-email"></div>
+</div>
+</div>
+<div class="date">January 9, 2014</div>
+</div>
+<section class="section" id="section-1"><div class="heading"><h1>
+<span class="type">Section</span> <span class="counter">1</span> <span class="title">Automorphism Groups in Sage</span>
+</h1></div>
+<p>We can build permutation groups from scratch in Sage, but it is more interesting to get them as structure-preserving bijections (permutations) of combinatorial structures.  That is worth saying again:  “structure-preserving bijections of combinatorial structures”.</p>
+<p>Build a small graph and compute its automorphism group. <em>Note:</em> the vertices of Sage graphs by default are integers starting at zero, which is very convenient for programming.  The automorphism group of such a graph properly permutes these names for the vertices.  However, the tradition for generic permutation groups is to permute integers, starting from one.  This is not a problem — just be aware of it when you see it.</p>
+<div class="sage-compute"><script type="text/x-sage">C4 = graphs.CycleGraph(4)
+C4.plot()
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">A = C4.automorphism_group()
+A
+</script></div>
+<p></p>
+<div class="sage-compute"><script type="text/x-sage">A.list()
+</script></div>
+<p>Another graph, a bit more interesting.</p>
+<div class="sage-compute"><script type="text/x-sage">cube = graphs.CubeGraph(3)
+cube.plot()
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">cube.plot(layout="spring")
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">B = cube.automorphism_group()
+B
+</script></div>
+<p>On the one hand it is nice to see the permutations as functions on the names of the vertices (binary strings of length 3).  On the other hand it is a bit of a mess and a bit of a distraction.  We make a copy of the graph, then relabel its vertices with integers and go from there.</p>
+<div class="sage-compute"><script type="text/x-sage">cube_relabeled = copy(cube)
+cube_relabeled.relabel()
+cube_relabeled.automorphism_group()
+</script></div>
+<p>We can use either group for computations, the labeling will not matter for many items of interest.  I have <tt class="code">B</tt> saved already.</p>
+<div class="sage-compute"><script type="text/x-sage">B.order()
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">B.list()
+</script></div>
+<p>Now lets turn our attention to automorphisms of designs.</p>
+<div class="sage-compute"><script type="text/x-sage">had = designs.HadamardDesign(15)
+had
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">had.is_block_design()
+</script></div>
+<p>There are \(15!\) possible permutations of the points of the design.  How big a number is that?</p>
+<div class="sage-compute"><script type="text/x-sage">factorial(15)
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">factorial(15).log(10)
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">N(factorial(15).log(10))
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">C = had.automorphism_group()
+C
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">C.order()
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">factor(C.order())
+</script></div>
+<p>The matroid routines in Sage are very new.  Automorphism groups are not implemented yet (Version 6.0), but that addition is planned.  Perhaps it will build off of Sage's excellent automorphism routines for graphs (as much of the other automorphism routines already do).</p>
+<p>Continue previous example by grabbing a single block and a single automorphism.  Apply the automorphism to the elements of the block and sort the result.  Then discover the “new” block as an element of the list of blocks, as expected.</p>
+<p>Careful: add one to argument, then subtract one from image, when applying automorphism to block.  (Do you see why?)</p>
+<div class="sage-compute"><script type="text/x-sage">
+</script></div></section><section class="section" id="section-2"><div class="heading"><h1>
+<span class="type">Section</span> <span class="counter">2</span> <span class="title">Labelings of the Fano Plane</span>
+</h1></div>
+<p>In how many ways?  And how quickly can we figure this out?  We have to work a </p>
+<div class="sage-compute"><script type="text/x-sage">F = designs.ProjectiveGeometryDesign(2, 1, FiniteField(2))
+F.is_block_design()
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">factorial(7)/F.automorphism_group().order()
+</script></div>
+<p>Boom!</p></section>
+</div>
+</div></main></div>
+</body>
+</html>
