@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--*                                    *-->
+<!--* Generated from MathBook XML source *-->
+<!--*                                    *-->
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['\\(','\\)']]},
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                         },
+        TagSide: "right",
+        TagIndent: ".8em"
+    },
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script src="http://sagecell.sagemath.org/static/jquery.min.js"></script><script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script><script>
+$(function () {
+    // Make *any* div with class 'sage-compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.sage-compute',
+                           linked: true,
+                           evalButtonText: 'Evaluate'});
+});
+    </script><script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script><link href="http://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://aimath.org/knowl.js"></script><script src="http://mathbook.staging.michaelxdubois.com/master/js/ScrollingNav.js"></script><script src="http://mathbook.staging.michaelxdubois.com/master/js/Mathbook.js"></script><link href="http://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/beezer_a.css" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/section2_files/beezer-addon1b.css" rel="stylesheet" type="text/css">
+<link href="http://aimath.org/~farmer/htmlbooks/Dec2013/section2_files/beezer-addon2b.css" rel="stylesheet" type="text/css">
+<link href="http://mathbook.staging.michaelxdubois.com/master/stylesheets/mathbook-modern.css" rel="stylesheet" type="text/css">
+<link href="http://mathbook.staging.michaelxdubois.com/master/stylesheets/icons.css" rel="stylesheet" type="text/css">
+</head>
+<body class="has-toc">
+<header id="masthead"><div class="banner"><div class="container">
+<h1 id="title"><span id="title-content">AIMS DMG Exercises 10</span></h1>
+<p id="subtitle"><span id="subtitle-content">(Authors or proper subtitle)</span></p>
+</div></div>
+<div id="navbar"><div class="container"><div id="toc-navbar-item" class="navbar-item">
+<h2 class="navbar-item-text icon-navicon-round ">Table of Contents</h2>
+<nav id="toc"></nav>
+</div></div></div></header><div class="page"><main class="main"><div id="content">
+<div style="display:none;">
+            \(\)
+            </div>
+<div class="article">
+<div class="heading">
+<div class="title">AIMS DMG Exercises 10</div>
+<div class="event">AIMS 2013-14: Designs, Matroids and Graphs</div>
+<div class="authorgroup">
+<div class="author-info">
+<div class="author-name">Rob Beezer</div>
+<div class="author-department"></div>
+<div class="author-institution">University of Puget Sound</div>
+<div class="author-email"></div>
+</div>
+<div class="author-info">
+<div class="author-name">Nancy Neudauer</div>
+<div class="author-department"></div>
+<div class="author-institution">Pacific University</div>
+<div class="author-email"></div>
+</div>
+</div>
+<div class="date">January 10, 2014</div>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 1 </span>From the matroid version of the Fano Plane we can construct a “Graph of the Day”.</p>
+<p><ol>
+<li>Build the matroid version of the Fano Plane with the Sage constructor <tt class="code">matroids.PG(2,2)</tt>.</li>
+<li>The bases of this matroid are all the \(3\)-sets of the \(7\)-set which are not lines of the projective geometry version (or not blocks of the design version).  Obtain these sets and save them in a list.  Be sure to retain them as “frozenset”'s.</li>
+<li>Construct a graph whose vertices are the bases you just computed and saved.  Join two vertices with an edge if and only if the sets are disjoint, as described next.</li>
+<li>You can compute the intersection using the <tt class="code">.intersection()</tt> method, but you will need to convert the result with the <tt class="code">list()</tt> function to check for disjointness.</li>
+<li>You can construct the graph by simply giving the <tt class="code">Graph()</tt> constructor a list of pairs of adjacent vertices.</li>
+<li>Your graph should be the Coxeter graph, which is built into Sage.  Build the Coxeter graph and then use the <tt class="code">.is_isomorphic()</tt> method to check that your graph really is the Coxeter graph.</li>
+</ol></p>
+<p>Full marks for all your code in a single Sage cell, which when evaluated returns true from the isomorphism check in the last step.  You can do this with five lines of Sage code, each corresponding to one of the steps above.</p>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 2 </span>This exercise asks you to construct the finite geometry known as an affine plane.  Specifially, \(AG(2, 17)\).</p>
+<p><ol>
+<li>Create \(F=GF(17)\) with the Sage command <tt class="code">FiniteField(17)</tt>.</li>
+<li>Use a Python list comprehension to make a list of all the pairs of elements from \(F\).  These are the points of the geometry.</li>
+<li>Consider all \(17^2\) possible lines, including the vertical ones.  In other words, these lines have the form \(y = mx + b\) for the various choices of \(m\) and \(b\) from \(F\).</li>
+<li>For each such line, compute all the pairs \((x,y)\) that lie on the line.  (You should have \(17\) each time.)  This is the geometry.</li>
+<li>Now we will realize the geometry as a design.  Each line is a block of the design.  You should have \(17^2\) blocks, each of size \(17\).</li>
+<li>Here is the hardest part of this exercise.  Convert your elements of the geometry to the integers \(0\) through \(17^2-1\).  The Python <tt class="code">.index()</tt> command could be a useful way to go.  Use your conversion process to convert the elements of each block.</li>
+<li>Now provide all your blocks to the Sage constructor <tt class="code">BlockDesign()</tt>.</li>
+<li>If all is well, the design will be created.  Check it with the <tt class="code">.is_block_design()</tt> method and see if it returns the parameters you expect.  Just what parameters are you expecting?  Give that some thought <em>before</em> doing this final step. (This query can take a while to run, so be patient.)</li>
+</ol></p>
+<p>This is a significant programming exercise and will require some effort.  Build up your computations slowly.  In other words, get each of the above steps working one by one.</p>
+<p>To receive full marks submit your computation all in one cell, which can be executed to return just the output of the <tt class="code">.is_block_design()</tt> computation.</p>
+<p>Extra credit:  set <tt class="code">p=17</tt> as the first line of your program, and then never hard-code \(17\) again.  In this way, you have a program which can be re-run for other values of <tt class="code">p</tt> with just a single edit.</p>
+<div class="sage-compute"><script type="text/x-sage">
+</script></div>
+</div>
+</div>
+</div></main></div>
+</body>
+</html>
