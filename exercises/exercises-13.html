@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--*                                    *-->
+<!--* Generated from MathBook XML source *-->
+<!--*                                    *-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIMS DMG Exercises 13</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['\\(','\\)']]},
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                         },
+        TagSide: "right",
+        TagIndent: ".8em"
+    },
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script src="http://sagecell.sagemath.org/static/jquery.min.js"></script><script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script><script>
+$(function () {
+    // Make *any* div with class 'sage-compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.sage-compute',
+                           linked: true,
+                           evalButtonText: 'Evaluate'});
+});
+    </script><script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script><link href="http://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://aimath.org/knowl.js"></script><link href="http://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="mathbook.css">
+</head>
+<body>
+<div style="display:none;">
+            \(\)
+            </div>
+<div class="article">
+<div class="heading">
+<div class="title">AIMS DMG Exercises 13</div>
+<div class="event">AIMS 2013-14: Designs, Matroids and Graphs</div>
+<div class="authorgroup">
+<div class="author-info">
+<div class="author-name">Rob Beezer</div>
+<div class="author-department"></div>
+<div class="author-institution">University of Puget Sound</div>
+<div class="author-email"></div>
+</div>
+<div class="author-info">
+<div class="author-name">Nancy Neudauer</div>
+<div class="author-department"></div>
+<div class="author-institution">Pacific University</div>
+<div class="author-email"></div>
+</div>
+</div>
+<div class="date">January 13, 2014</div>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 1 </span>This exercise asks you to verify a theorem.  It will require you to become more adept manipulating the varieties and blocks of a design with Python and Sage.</p>
+<p><ol>
+<li>Construct the Witt design on \(23\) varieties using <tt class="code">designs.WittDesign()</tt> in Sage.  This is a \(4\)-design, though in this problem we shall consider it as a \(3\)-design, since a theorem tells us this happens.</li>
+<li>Compute the parameters of the design as a  \(3\)-design.</li>
+<li>Compute every \(3\)-set and determine how many blocks each is contained in.  If this is a design, the number should be the same for each \(3\)-set.  Verify and <em>compute</em> this common number, which we usually refer to as \(\lambda\).  <em>Do not</em> assume the above computation of the parameters is correct and merely <em>check</em> that value.</li>
+</ol></p>
+<p>Full marks for a successful verification of the defining property of a design in the case of this example and a <em>computation</em> of the value of \(\lambda\).</p>
+<div class="sage-compute"><script type="text/x-sage">
+</script></div>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 2 </span>Find <em>the</em> Hadamard matrix of size 12 at Neil Sloane's library of Hadamard matrices (located at <a class="external-url" href="http://neilsloane.com/hadamard/" target="_blank">http://neilsloane.com/hadamard/</a>).</p>
+<p>Read and understand the construction of Hadamard \(2\)-designs and Hadamard \(3\)-designs contained in Chapter 3 of the AIMS Library designs book.</p>
+<p>Use Python and Sage to create the blocks of these two designs based on the Hadamard matrix of size 12, and check your work by providing your blocks as input to the <tt class="code">BlockDesign()</tt> constructor.</p>
+<p>Your worksheet should have three cells — one to prepare the Hadamard matrix, one to build the \(2\)-design and one to build the \(3\)-design.  Full marks if the last two cells return <tt class="code">True</tt> as a result of using the block design constructor.</p>
+<div class="sage-compute"><script type="text/x-sage">
+</script></div>
+</div>
+</div>
+</body>
+</html>
