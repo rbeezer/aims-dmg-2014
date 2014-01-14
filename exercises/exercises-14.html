@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--*                                    *-->
+<!--* Generated from MathBook XML source *-->
+<!--*                                    *-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIMS DMG Exercises 14</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['\\(','\\)']]},
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                         },
+        TagSide: "right",
+        TagIndent: ".8em"
+    },
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script src="http://sagecell.sagemath.org/static/jquery.min.js"></script><script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script><script>
+$(function () {
+    // Make *any* div with class 'sage-compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.sage-compute',
+                           linked: true,
+                           evalButtonText: 'Evaluate'});
+});
+    </script><script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script><link href="http://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://aimath.org/knowl.js"></script><link href="http://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="mathbook.css">
+</head>
+<body>
+<div style="display:none;">
+            \(\)
+            </div>
+<div class="article">
+<div class="heading">
+<div class="title">AIMS DMG Exercises 14</div>
+<div class="event">AIMS 2013-14: Designs, Matroids and Graphs</div>
+<div class="authorgroup">
+<div class="author-info">
+<div class="author-name">Rob Beezer</div>
+<div class="author-department"></div>
+<div class="author-institution">University of Puget Sound</div>
+<div class="author-email"></div>
+</div>
+<div class="author-info">
+<div class="author-name">Nancy Neudauer</div>
+<div class="author-department"></div>
+<div class="author-institution">Pacific University</div>
+<div class="author-email"></div>
+</div>
+</div>
+<div class="date">January 14, 2014</div>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 1 </span>The Petersen graph is not planar.  Use the Sage <tt class="code">.is_planar()</tt> method to verify this. Now use Sage to assist you with an application of Kuratowski's Theorem.</p>
+<p><ol>
+<li>Create a subgraph of the Petersen graph using Sage commands to delete edges and vertices.</li>
+<li>Use a list comprehension to create a list of all the vertices of this subgraph which have degree \(2\).</li>
+<li>Merge each degree \(2\) vertex of the subgraph with one of its neighbors using the <tt class="code">.merge_vertices()</tt> method.  Use <tt class="code">.neighbors()</tt> to locate a neighbor.</li>
+<li>Check that your result is isomorphic to \(K_{3,3}\) using the Sage <tt class="code">.is_isomorpic()</tt> method.</li>
+<li>Start over with a fresh copy of the Petersen graph and demonstrate that the Petersen graph is contractible to \(K_5\).  You should be able to do this in one cell with a minimum of code.</li>
+</ol></p>
+<p>Automate as much of the work as you can with Sage, paying special attention to Steps 2 and 3 above. In other words, some of the steps can be done simultaneously with commands, though you will still need to do some things by hand.  Put Steps 1 through 5 each in their own Sage cell and do not use more than five cells for your solution.  Plot your subgraph as the final command for Steps 1 and 3.</p>
+<p>Full marks for a successful creation and verification of a subgraph isomorphic to \(K_{3,3}\) and verification of being contractible to \(K_5\).  Some marks will be reserved for clean code that makes the best use of Sage and Python.</p>
+<div class="sage-compute"><script type="text/x-sage">
+</script></div>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 2 </span>Create the planar Circular Ladder graph on \(10\) vertices with <tt class="code">G = graphs.CircularLadder(5)</tt>.  The dual graph has vertices that are the faces of the planar graph, and edges join faces that are adjacent, and will thus be planar also.</p>
+<p>Run the cell below to create a function that will build the dual graph.  Do not edit this code.  Note that the function returns two things — the dual graph, plus a Python dictionary which associates each vertex of the dual with a face of the original.</p>
+<div class="sage-compute"><script type="text/x-sage">def dual_graph(G):
+    r"""Returns a pair with (1) the dual graph, and 
+    (2) a dictionary of vertices of the dual giving faces of original"""
+    if not(G.is_planar(set_embedding=True, set_pos=True)):
+        raise ValueError( "input graph is not planar" )
+    faces = G.trace_faces(G.get_embedding())
+    edges = G.edges(labels=False)
+    dual_edges = []
+    for e in edges:
+        right_face = [f for f in faces if e in f][0]
+        # oriented the other way
+        flipped = (e[1],e[0])
+        left_face = [f for f in faces if flipped in f][0]graph.
+        dual_edges.append((faces.index(left_face), faces.index(right_face)))
+    D = Graph(dual_edges)
+    if not(D.is_planar(set_embedding=True, set_pos=True)):
+        raise RuntimeError('the dual of a planar graph is not planar.  Hmm...')
+    # translation dictionary
+    translation = {}
+    for f in faces:
+        circuit = [e[0] for e in f]
+        translation[faces.index(f)] = circuit
+    return D, translation
+</script></div>
+<p><ol>
+<li>Compute some cycles in <tt class="code">G</tt> using the <tt class="code">.cycle_basis()</tt> method.  Each edge of a cycle will have a face on either side, and so will correspond with an edge in the dual.  Describe the set of such edges in the dual for a cycle of the orginal.  You can create more cycles in the original graph by combining two or more elements of the cycle basis.</li>
+<li>Test your description from the previous step by using Sage functions to obtain the objects you have described for the dual graph and exploring their corresponding objects in the original graph.</li>
+<li>Create the cycle matroid of the original graph and ask for its circuits.  What do you observe?</li>
+<li>Create the dual of this matroid and again ask for its circuits.  What do you observe?</li>
+</ol></p>
+<p>This problem is very vague, because to say more would spoil the fun.  Explore!</p>
+<div class="sage-compute"><script type="text/x-sage">
+</script></div>
+</div>
+</div>
+</body>
+</html>
