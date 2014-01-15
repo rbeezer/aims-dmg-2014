@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--*                                    *-->
+<!--* Generated from MathBook XML source *-->
+<!--*                                    *-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIMS DMG Exercises 15</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['\\(','\\)']]},
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                         },
+        TagSide: "right",
+        TagIndent: ".8em"
+    },
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script src="http://sagecell.sagemath.org/static/jquery.min.js"></script><script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script><script>
+$(function () {
+    // Make *any* div with class 'sage-compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.sage-compute',
+                           linked: true,
+                           evalButtonText: 'Evaluate'});
+});
+    </script><script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script><link href="http://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://aimath.org/knowl.js"></script><link href="http://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="mathbook.css">
+</head>
+<body>
+<div style="display:none;">
+            \(\)
+            </div>
+<div class="article">
+<div class="heading">
+<div class="title">AIMS DMG Exercises 15</div>
+<div class="event">AIMS 2013-14: Designs, Matroids and Graphs</div>
+<div class="authorgroup">
+<div class="author-info">
+<div class="author-name">Rob Beezer</div>
+<div class="author-department"></div>
+<div class="author-institution">University of Puget Sound</div>
+<div class="author-email"></div>
+</div>
+<div class="author-info">
+<div class="author-name">Nancy Neudauer</div>
+<div class="author-department"></div>
+<div class="author-institution">Pacific University</div>
+<div class="author-email"></div>
+</div>
+</div>
+<div class="date">January 15, 2014</div>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 1 </span>This exercise asks you to construct a routine which should really be part of Sage already.</p>
+<p>Construct a Python function which accepts a block design as input.  It should then return the derived design and the residual design as a Python tuple (a pair).</p>
+<p>Full marks for a successful demonstration of your routine.  Choose a nontrivial design (your choice, but bigger is better).  Provide this design as input to your function.  Apply the <tt class="code">.is_block_design()</tt> to the two designs in the output and provide commentary on how you know the parameters of the resulting designs are correct.</p>
+<div class="sage-compute"><script type="text/x-sage">
+</script></div>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 2 </span>This exercise asks you to explore connections between finite geometries, designs and matroids.</p>
+<p><ol>
+<li>Construct the design whose blocks are the lines of the projective geometry \(PG(2, 5)\) by using the built-in Sage routine <tt class="code">designs.ProjectiveGeometryDesign()</tt> with points on the plane (dimension \(2\)) and blocks that are lines (dimension \(1\) subspaces), all over \(GF(5)\).  Check the parameters of the design and list the blocks.</li>
+<li>A “flat” of rank \(r\) in a matroid is a maximal set of elements with rank \(r\).  (So if you add any element to a flat, the rank increases.)  “Hyperplanes” are flats whose rank is one less than the rank of the matroid.   Construct the matroid derived from the projective geometry \(PG(2,5)\) with the built-in Sage routine <tt class="code">matroids.PG()</tt>.  This matroid has rank \(3\) since the bases are all sets of \(3\) points that together do not form a line of the projective geometry.  So the hyperplanes of this matroid are the maximal sets of rank \(2\).  Compute these with the <tt class="code">.flats()</tt> method.</li>
+<li>Use the \(2\)-flats you just computed as input (the blocks) to the <tt class="code">BlockDesign()</tt> constructor.  Comment on the result.</li>
+<li>Go back to the projective geometry design you built in the first step.  Assume that the blocks of the design are the \(2\)-flats of a matroid (hyperplanes of a rank-3 matroid).  Then any set of three varieties/elements that is a basis of the matroid (an independent set of size three) will not be a subset of any block/\(2\)-flat.  Construct all of these bases, and then use them as input to the <tt class="code">Matroid()</tt> constructor in order to build a second matroid.  (You may find the <tt class="code">Subsets()</tt> constructor useful as a way to start.)  Verify that this second matroid is isomorphic to the first matroid.</li>
+</ol></p>
+<p>In one cell build the matroid and its \(2\)-flats, and then comment on its relationship to the design.  In another cell, build the design, construct the blocks and then the bases for the matroid.  Finish this cell with the check that the matroid you construct from the design is isomorphic to the matroid Sage constructs.</p>
+<div class="sage-compute"><script type="text/x-sage">
+</script></div>
+</div>
+</div>
+</body>
+</html>
