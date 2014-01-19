@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--*                                    *-->
+<!--* Generated from MathBook XML source *-->
+<!--*                                    *-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIMS DMG Sage Demonstration 20</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['\\(','\\)']]},
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                         },
+        TagSide: "right",
+        TagIndent: ".8em"
+    },
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script src="http://sagecell.sagemath.org/static/jquery.min.js"></script><script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script><script>
+$(function () {
+    // Make *any* div with class 'sage-compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.sage-compute',
+                           linked: true,
+                           evalButtonText: 'Evaluate'});
+});
+    </script><script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script><link href="http://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://aimath.org/knowl.js"></script><link href="http://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="mathbook.css">
+</head>
+<body>
+<div style="display:none;">
+            \(\)
+            </div>
+<div class="article">
+<div class="heading">
+<div class="title">AIMS DMG Sage Demonstration 20</div>
+<div class="event">AIMS 2013-14: Designs, Matroids and Graphs</div>
+<div class="authorgroup">
+<div class="author-info">
+<div class="author-name">Rob Beezer</div>
+<div class="author-department"></div>
+<div class="author-institution">University of Puget Sound</div>
+<div class="author-email"></div>
+</div>
+<div class="author-info">
+<div class="author-name">Nancy Neudauer</div>
+<div class="author-department"></div>
+<div class="author-institution">Pacific University</div>
+<div class="author-email"></div>
+</div>
+</div>
+<div class="date">January 20, 2014</div>
+</div>
+<p>In this chapter, we begin with the complete graph on six vertices, \(K_6\) and construct three diverse and remarkable combinatorial structures.  This material follows Chapter 6, “A property of the number six” of “Designs, Graphs, Codes and their Links” by P.J. Cameron and J.H. van Lint, who in turn credit lectures of G. Higman.  We begin with the vertices and edges of the complete graph, and then create sets of three edges known as \(1\)-factors.  Collections of \(1\)-factors become factorizations of the original complete graph.  Vertices, edges, factors and factorizations then all combine to create our three ultimate combinatorial structures.</p>
+<div class="section">
+<div class="heading">
+<span class="number">1</span> <span class="title">Factors of \(K_6\)</span>
+</div>
+<p>A <em class="terminology">factor</em> of a graph, or more precisely a <em class="terminology">1-factor</em>, is a subgraph which includes every vertex and is regular of degree \(1\).  For \(K_6\) this is a collection of \(3\) edges with no common vertices.</p>
+<p>We build \(K_6\) first.  We will work with sets of sets, so we convert the edges of \(K_6\) into two-element sets.  Note that the vertices are integers, <em>starting with zero</em>.  Also, we use the Sage constructor <tt class="code">Set()</tt> rather than the Python version (<tt class="code">set()</tt>), since these behave differently and we will have an easier time with the Sage version.  Of course, \(K_6\) has \(6\) vertices and \({6\choose 2}=15\) edges.  We will see these numbers repeatedly throughout this chapter.</p>
+<div class="sage-compute"><script type="text/x-sage">K6 = graphs.CompleteGraph(6)
+vertices = K6.vertices()
+vertices
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">edges = [Set(e) for e in K6.edges(labels=False)]
+edges
+</script></div>
+<p>We will give each of the \(15\) edges a name (an arbitrary lowercase letter) which will make some of our graphs a bit more tidy when displaying them. A Python dictionary (mapping) is a natural way to specify this.</p>
+<div class="sage-compute"><script type="text/x-sage">edge_names = dict(zip(edges, [chr(i) for i in range(ord('a'), ord('a')+15)]))
+edge_names  # not tested
+</script></div>
+<p>Since \(K_6\) includes every possible edge, a factor is partition of the vertex set into a set of three \(2\)-sets.  We discover \(15\) factors.</p>
+<div class="sage-compute"><script type="text/x-sage">factors = SetPartitions(vertices,[2,2,2]).list()
+factors = [Set(list(A)) for A in factors]
+factors
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">len(factors)
+</script></div>
+<p>We can easily visualize the \(15\) different factors by considering each factor as an edge-induced subgraph of \(K_6\).  We build a list of these subgraphs and use a convenient utility in Sage to display them all simply and compactly.  These \(15\) objects will be critical in what follows.</p>
+<div class="sage-compute"><script type="text/x-sage">factor_graphs = [Graph([e.list() for e in f]) for f in factors]
+graphs_list.show_graphs(factor_graphs)
+</script></div>
+<div class="figure">
+<img src="images/K6-fifteen-one-factors.png"><figcaption>Figure 1: Fifteen one-factors of \(K_6\)<a class="label" name=""></a></figcaption>
+</div>
+<p>The edge-factor incidence graph is a remarkable graph.  The Tutte \(8\)-cage is the cubic graph (i.e. regular of degree \(3\)) with girth \(8\) and having the fewest possible number of vertices.  It therefore also qualifies as a Moore graph.  Since it is distance-transitive, it is also distance-regular.</p>
+<p>We use the set of edges and the set of factors as the vertex set of a graph.  We join an edge to a factor if the edge is a component of the factor.</p>
+<div class="sage-compute"><script type="text/x-sage">T = Graph([(e, f) for e in edges for f in factors if e in f])
+T.num_verts(), T.num_edges(), T.is_bipartite(), T.is_regular(), T.average_degree(), T.girth()
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">T.is_isomorphic(graphs.TutteCoxeterGraph())
+</script></div>
+<p>Since this graph is built into Sage, we can get a much more pleasing drawing from the embedding that is hard-coded.  If we give our factors names (uppercase letters from the start of the alphabet), then we can relabel the vertices of a copy of the graph and use Sage's <tt class="code">BipartiteGraph</tt> class to get another informative drawing.</p>
+<div class="sage-compute"><script type="text/x-sage">graphs.TutteCoxeterGraph().plot()
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">factor_names = dict(zip(factors, [chr(i) for i in range(ord('A'), ord('a')+15)]))
+factor_names  # not tested
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">TB = copy(T)
+TB.relabel(edge_names)
+TB.relabel(factor_names)
+BipartiteGraph(TB).plot()
+</script></div>
+</div>
+<div class="section">
+<div class="heading">
+<span class="number">2</span> <span class="title">Factorizations of \(K_6\)</span>
+</div>
+<p>A <em class="terminology">factorization</em>, or more precisely a <em class="terminology">\(1\)-factorization</em>, is a partition of the edge set of a graph into \(1\)-factors.  For \(K_6\) this is a partition of the \({6\choose 2}=15\) edges into \(5\) factors with \(3\) edges each.</p>
+<p>We will see that \(K_6\) has six distinct factorizations, each isomorphic to the other.  Furthermore, each factor is contained in exactly two of these factorizations, and any pair of factorizations have exactly one factor in common.  So given a factor we can determine a pair of factorizations and given a pair of factorizations we can determine a factor.  These observations will be critical in the following, especially the section on duality.  These claims can be verified analytically — we will instead use Sage experimentally.</p>
+<p>We begin by employing a graph to help us find the factorizations.  The vertices of the graph are the factors of \(K_6\), and we join two vertices if the factors are disjoint.  Then a factorization of \(K_6\) is a clique of size \(5\) in this graph, and there is no possibility of any larger clique because the edge set is exhausted by \(5\) disjoint factors.  So factorizations of \(K_6\) are maximal cliques in this graph, which we record as Sage sets.</p>
+<div class="sage-compute"><script type="text/x-sage">factor_graph = Graph([(f1, f2) for f1, f2 in Subsets(factors, 2) if f1.intersection(f2).cardinality() == 0])
+factorizations = factor_graph.cliques_maximum()
+factorizations = [Set(f) for f in factorizations]
+factorizations
+</script></div>
+<p>To visualize factorizations, it helps to look at a drawing of \(K_6\) with edges colored according to the factor they belong to.  We build an ad-hoc set of fifteen contrasting colors as RGB triples and assign them to the factors with a Python dictionary.  We will consistently use this color assignment in the remainder.</p>
+<div class="sage-compute"><script type="text/x-sage">twentyseven_colors = [triple for triple in CartesianProduct([0,0.5, 1], [0,0.5, 1], [0,0.5, 1])]
+contrast_colors = [tuple(twentyseven_colors[i]) for i in [0,1,3,5,7,8,9,11,13,18,19,21,22,23,24]]
+factor_colors = dict(zip(factors, contrast_colors))
+</script></div>
+<p>We now build and draw a copy of \(K_6\) for each factorization, using the provided color for the edges of each factor in the factorization.  We will employ the <tt class="code">one_K6_graphic()</tt> function twice, so be sure to execute it first.  We exercise some of the graphics primitives for a little more control over the design of our diagrams.</p>
+<div class="sage-compute"><script type="text/x-sage">def one_K6_graphic(center, factorization):
+    r'''Draw a single factorization of K6 at a center point'''
+    global factor_colors
+    radius = 300
+    v_radius = 20
+    points = [(center[0]+radius*cos(i*pi/3.0), center[1]+radius*sin(i*pi/3.0)) for i in range(6)]
+    vertices = [circle(p, v_radius, fill=True, facecolor='black', edgecolor='black', zorder=4) for p in points]
+    edges = [line([points[e[0]], points[e[1]]], color=factor_colors[f], thickness=3, zorder=3) for f in factorization for e in f]
+    mask = polygon2d(points, fill=True, rgbcolor=(1,1,1), zorder=2) # for combined plot
+    return sum([mask] + edges + vertices) # in z-order
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">six_plots = [one_K6_graphic((0,0), f) for f in factorizations]
+array = graphics_array(six_plots,3,2)
+array.show(axes=false)
+</script></div>
+<div class="figure">
+<img src="images/K6-six-factorizations.png"><figcaption>Figure 1: Factorizations of \(K_6\)<a class="label" name=""></a></figcaption>
+</div>
+<p>We made two claims above about factors and factorizations:  any single factor is contained in exactly two factorizations, and any two factorizations share a single common factor.  For each factor, we form a list of factorizations containing that factor, and then simply check that the size (length) of that list is \(2\) in each case. Then we examine all pairs of factorizations, determining the size of the set of common factors for each pair.</p>
+<div class="sage-compute"><script type="text/x-sage">map(len, [[fz for fz in factorizations if f in fz] for f in factors])
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">map(len, [fz1.intersection(fz2) for fz1, fz2 in Subsets(factorizations, 2)])
+</script></div>
+<p>As any two factorizations share a single factor, we can make the \(6\) factorizations the vertices of a graph, add every possible edge (a complete graph) and color each edge with the color of the factor shared by the two factorizations at the endpoints.</p>
+<div class="sage-compute"><script type="text/x-sage">points = [(1000*cos(i*pi/3.0), 1000*sin(i*pi/3.0)) for i in range(6)]
+nodes = [one_K6_graphic(p, f) for (p,f) in zip(points, factorizations)]
+arcs = []
+for i in range(6):
+    for j in range(i+1, 6):
+        common_factor = (factorizations[i].intersection(factorizations[j]))[0]
+        color = factor_colors[common_factor]
+        arcs.append(line([points[i], points[j]], thickness=5, color=color, zorder=1))
+show(sum(arcs + nodes), axes=False) # in z-order
+</script></div>
+<div class="figure">
+<img src="images/K6-factorization-graph.png"><figcaption>Figure 2: Factorization diagram for \(K_6\)<a class="label" name=""></a></figcaption>
+</div>
+<p>We will find it convenient later to have names for the factorizations — we will use uppercase letters from the end of the alphabet.</p>
+<div class="sage-compute"><script type="text/x-sage">factorization_names = dict(zip(factorizations, [chr(i) for i in range(ord('U'), ord('a')+6)]))
+factorization_names  # not tested
+</script></div>
+</div>
+<div class="section">
+<div class="heading">
+<span class="number">3</span> <span class="title">A Faithful Action on Factorizations</span>
+</div>
+<p>Automorphisms of a graph are permutations of the vertex set, which when applied to pairs of vertices, take edges to edges, and take non-edges to non-edges.  Because every possible edge is present in \(K_6\), <em>every</em> permutation of the vertices is an automorphism.</p>
+<div class="sage-compute"><script type="text/x-sage">aut = SymmetricGroup(vertices)
+aut
+</script></div>
+<p>In this section we will show that the group of automorphisms of \(K_6\), as a group action on the set of factorizations, is a faithful group action.  This means that no nontrivial element of the group fixes all of the factorizations, or equivalently, the mapping from an automorphism to a permutation of the factorizations is injective.  First, we define a group action on the edges of \(K_6\), use it to define a group action on factors of \(K_6\), and then define a group action on factorizations of \(K_6\).</p>
+<div class="sage-compute"><script type="text/x-sage">def permute_edge(sigma, e):
+    '''Action of a vertex permutation on an edge.'''
+    return Set([sigma(v) for v in e])
+
+def permute_factor(sigma, f):
+    '''Action of a vertex permutation on a factor.'''
+    return Set([permute_edge(sigma, e) for e in f])
+
+def permute_factorization(sigma, fz):
+    '''Action of a vertex permutation on a factorization.'''
+    return Set([permute_factor(sigma, f) for f in fz])
+</script></div>
+<p>We give an illustration of this action with a 6-cycle from the automorphism group acting on the third factorization, with the result of the action being the fourth factorization.  We accumulate the various items as strings in a list, then join them together to print in a readable way.</p>
+<div class="sage-compute"><script type="text/x-sage">cycle = aut("(0,1,2,3,4,5)")
+display = [str(cycle), "\n-----\n"]
+fz = factorizations[2]
+display += [str(fz), "\n-----\n"]
+result = permute_factorization(cycle, fz)
+display += [str(result), "\n-----\n"]
+result_match = (result == factorizations[3])
+display += [str(result_match)]
+print ''.join(display)
+</script></div>
+<p>We can apply an automorphism to each factorization, creating a permutation of the factorizations.  Employing the full permutation group of the factorizations, we check that the action only creates the identity permutation of the factorizations in the case of the identity automorphism.  In other words, the mapping from the automorphism group of the graph to the permutation group of the factorizations is injective, which we describe by saying the action is faithful, or by saying the automorphism group acts “faithfully” on the factorizations.</p>
+<p>We apply each of the \(6!=720\) automorphisms to each factorization, creating an ordered list of images which we use to define the resulting element of the permutation group of the factorizations.  This permutation is checked to see if it is the identity permutation, and if so it is saved in the list.  We expect to see only the identity automorphism.  This command may take a little while to run, but it is instructive.  There are more sensible ways to check computationally if the action is faithful (such as the result of the action for a set of generators of the group).</p>
+<div class="sage-compute"><script type="text/x-sage">SFZ = SymmetricGroup(factorizations)
+identity = SFZ("()")
+[sigma for sigma in aut if SFZ([permute_factorization(sigma, fz) for fz in factorizations]) == identity]
+</script></div>
+</div>
+<div class="section">
+<div class="heading">
+<span class="number">4</span> <span class="title">Constructions</span>
+</div>
+<p>From vertices, edges, factors and factorizations we can stitch together some interesting combinatorial configurations.</p>
+<div class="subsection">
+<div class="heading">
+<span class="number">4.1</span> <span class="title">Projective Plane of Order 4</span>
+</div>
+<p>A <em class="terminology">projective plane</em> of order \(n\) is a \(2-(n^2+n+1, n+1, 1)\) design.  Such a design is therefore a collection of sets (called <em class="terminology">blocks</em>), each of size \(n+1\), chosen from a universal set of size \(n^2+n+1\), with the property that any \(2\) elements chosen from the universal set is contained in exactly \(1\) of the blocks.</p>
+<p>As a finite geometry a projective plane of order \(n\) is a set of <em class="terminology">points</em> and <em class="terminology">lines</em>, together with an incidence relation, such that:
+            <ul>
+<li>Exactly one line passes through any two points.</li>
+<li>Any two lines pass through exactly one common point.</li>
+<li>Every point has exactly \(n+1\) lines pasing through the point.</li>
+<li>Every line passes through exactly \(n+1\) points.</li>
+</ul>
+            </p>
+<p>Here the notion of a line “passing through” a point is more precisely given by the incidence relation.  One common such relation is that lines are sets of points, and a point and line are incident if the point is an element of the line.</p>
+<p>A finite projective plane of order 4 is equivalent to a set of three mutually orthogonal Latin Squares (see Chapter 12 of  Combinatorial Theory, by Marshall Hall, Jr).  The impossibility  of the projective plane of order \(10\) was only settled in the late 1980s by Clement Lam.</p>
+<p>We will build a design from our factorizations by first building a graph that describes an incidence relation.  The points of the geometry will be the six vertices of \(K_6\) together with the fifteen factors of \(K_6\).  The lines of the geometry will be the fifteen edges of \(K_6\) along with the six factorizations of \(K_6\).  So we have \(21\) points and \(21\) lines.  The graph will be bipartite with points in one set of the bipartition and lines in the other set.  A vertex will be incident to an edge which contains it, a factor will be incident to an edge if the factor contains the edge, and a factor will be incident to factorization which contains it.</p>
+<p>The resulting biparite graph is regular of degree \(5\) on \(42\) vertices with girth \(6\).</p>
+<div class="sage-compute"><script type="text/x-sage">P = Graph()
+P.add_edges([(v, e)  for v in vertices for e in edges if v in e])
+P.add_edges([(f, e)  for f in factors for e in edges if e in f])
+P.add_edges([(f, fz) for f in factors for fz in factorizations if f in fz])
+P.num_verts(), P.is_bipartite(), P.is_regular(), P.average_degree(), P.girth()
+</script></div>
+<p>We can relabel the vertices of a copy of the graph, and then have Sage recognize the bipartite structure before producing a drawing.</p>
+<div class="sage-compute"><script type="text/x-sage">R = copy(P)
+R.relabel(edge_names)
+R.relabel(factor_names)
+R.relabel(factorization_names)
+B = BipartiteGraph(R)
+B.plot()
+</script></div>
+<p>If we call Sage's relabeling function with no arguments, the points will be labeled with the integers \(0\) to \(20\) and the lines will be labeled with the integers \(21\) to \(41\).  We can create the blocks of a block design by creating lists of the points on each line.</p>
+<div class="sage-compute"><script type="text/x-sage">C = copy(B)
+C.relabel()
+blocks = [[] for i in range(21)]
+for e in C.edges():
+    blocks[e[1]-21].append(e[0])
+D = BlockDesign(21, blocks)
+D.is_block_design()
+</script></div>
+<p>So the parameters are those of a \(2-(21, 5, 1)\) design, a projective plane of order \(4\).</p>
+<p>We can list all of the \(21\) blocks, if we wish.</p>
+<div class="sage-compute"><script type="text/x-sage">D.blocks()
+</script></div>
+<p>Notice that this subsection is made possible by the arithmetic: \(6+15=21=4^2+4+1\).</p>
+</div>
+<div class="subsection">
+<div class="heading">
+<span class="number">4.2</span> <span class="title">Hoffman-Singleton Graph</span>
+</div>
+<p>The Hoffman-Singleton Graph is an amazing structure, which can be created many different ways.  It is best known as a Moore graph: regular of degree \(7\) with odd girth \(5\), on \(50\) vertices, which is the minimum conceivable number.</p>
+<p>Our construction begins with two new vertices, which Cameron and van Lint call “zero” and “infinity” — we will shorten the label on the latter to simply “inf.”  Zero and infinity will be adjacent to each other, zero will be adjacent to each vertex of \(K_6\) and infinity will be adjacent to each factorization of \(K_6\).</p>
+<div class="sage-compute"><script type="text/x-sage">G = Graph()
+G.add_edge('inf', 'zero')
+G.add_edges([(v, 'zero')for v in vertices])
+G.add_edges([(fz, 'inf') for fz in factorizations])
+</script></div>
+<p>We have \(14\) vertices in our graph so far, we get another \(36\) from the Cartesian product of the set of \(6\) \(K_6\) vertices with the set of \(6\) factorizations.  Each pair is joined to the \(K_6\) vertex of the pair and the factorization in the pair.  At this point the vertices from the Cartesian product have just degree \(2\), the other vertices have reached degree \(7\).</p>
+<div class="sage-compute"><script type="text/x-sage">G.add_edges([(v,  (v,fz)) for v in vertices for fz in factorizations])
+G.add_edges([(fz, (v,fz)) for v in vertices for fz in factorizations])
+</script></div>
+<p>Among vertices of the Cartesian product a pair \((a, x)\) is adjacent to the pair \((b, y)\) if \(x\) and \(y\) are different factorizations and the edge \(\{a, b\}\) is contained in the factor common to \(x\) and \(y\).  (Recall that every pair of factorizations have a single factor in common.)</p>
+<div class="sage-compute"><script type="text/x-sage">for v1, v2 in Subsets(vertices, 2):
+    for fz1, fz2 in Subsets(factorizations, 2):
+        common_factor = fz1.intersection(fz2)[0]
+        if Set([v1, v2]) in common_factor:
+            G.add_edge((v1, fz1), (v2, fz2))
+            G.add_edge((v2, fz1), (v1, fz2))
+</script></div>
+<p>Construction complete, we can check that the graph has the requiste properties to be the Moore graph of degree \(7\) and girth \(5\).</p>
+<div class="sage-compute"><script type="text/x-sage">G.num_verts(), G.is_regular(), G.average_degree(), G.girth()
+</script></div>
+<p>Since these properties are enough to characterize the graph, we know we have it.  However, we will let Sage do a brutish check.  Our graph will not plot very nicely, while the implementation of the graph in Sage has a very novel feature.  Each time you create the Hoffman-Singleton graph, you get a different layout, always displaying some of the inherent symmetry.  So you can run the construct-and-plot command below repeatedly to experience different layouts.</p>
+<div class="sage-compute"><script type="text/x-sage">HS = graphs.HoffmanSingletonGraph()
+G.is_isomorphic(HS)
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">graphs.HoffmanSingletonGraph().plot()
+</script></div>
+<p>Notice that this subsection is made possible by the arithmetic: \(50 = 2 + 6 + 6 + 6\cdot 6\).</p>
+</div>
+<div class="subsection">
+<div class="heading">
+<span class="number">4.3</span> <span class="title">The Steiner System \(S(5,\,6,\,12)\)</span>
+</div>
+<p>The Steiner system, \(S(5,\,6,\,12)\) is a collection of \(132\) \(6\)-sets (“blocks”), chosen from a \(12\)-set (the “points”), such that every set of \(5\) points chosen from the \(12\)-set is contained in exactly one of the blocks.  In other words, a \(S(5,\,6,\,12)\) Steiner system is a \(5\)-\((12,6,1)\) design.</p>
+<p>The \(12\) points for our construction will be the \(6\) vertices of \(K_6\) and the \(6\) factorizations of \(K_6\).  The construction of designs in Sage is not as robust as those of graphs and permutation groups, and require our points to be integers, starting at zero.  We are in good shape with our vertices, and by necessity, we will use a dictionary to map factorizations to the integers \(6\) through \(11\).</p>
+<div class="sage-compute"><script type="text/x-sage">factorization_numbers = dict(zip(factorizations, range(6, 12)))
+</script></div>
+<p>The first two blocks of the construction will be the set of all six vertices and the set of all six factorizations.  We will create the blocks as sorted lists.  The sorting is only for the sake of appearance.</p>
+<div class="sage-compute"><script type="text/x-sage">blocks = []
+blocks.append(sorted(vertices))
+blocks.append(sorted(factorization_numbers.values()))
+</script></div>
+<p>The next \(90\) blocks come from considering each of the \(15\) pairs of distinct factorizations.  We know that each such pair has a single factor in common.  This factor has three edges, each edge providing two vertices as endpoints.  For each of the \(15\cdot 3=45\) factorization-pair/vertex-pair combinations we build two blocks.  Start the first block with the six vertices, remove the two vertices of the pair, and add in the two factorizations of the pair.  Similarly, start the second block with the six factorizations, remove the two factorizations of the pair, and add in the two vertices of the pair.</p>
+<div class="sage-compute"><script type="text/x-sage">for fz1, fz2 in Subsets(factorizations, 2):
+    common_factor = fz1.intersection(fz2)[0]
+    for v1, v2 in common_factor:
+        ablock = copy(vertices)
+        ablock.remove(v1)
+        ablock.remove(v2)
+        ablock.append(factorization_numbers[fz1])
+        ablock.append(factorization_numbers[fz2])
+        blocks.append(sorted(ablock))
+
+        ablock = factorization_numbers.values()
+        ablock.remove(factorization_numbers[fz1])
+        ablock.remove(factorization_numbers[fz2])
+        ablock.append(v1)
+        ablock.append(v2)
+        blocks.append(sorted(ablock))
+</script></div>
+<p>The final \(40\) blocks require more care.  Each of the \({6\choose 3}=20\) sets of triples can be used to create a permutation of the vertices that is a \(3\)-cycle.  While there are two possible ways to create this permutation, either choice leads to the same result in the following procedure.  As we did in the section on the faithful group action, this permutation of the vertices can be used to induce a permutation of the six factorizations.  It is not obvious (details are in van Lint and Wilson), but the induced permutation is a product of two \(3\)-cycles.  We use these two \(3\)-cycles merely to group the six factorizations into two sets of three.  (This decrease in structure partially explains the flexibility in the choice of the initial \(3\)-cycle.)  For each of the two sets of three factorizations so determined, append the three vertices chosen initially, so as to create the final \(20\cdot 2=40\) blocks.</p>
+<div class="sage-compute"><script type="text/x-sage">G = SymmetricGroup(vertices)
+H = SymmetricGroup(factorizations)
+
+for triple in Subsets(vertices, 3):
+    vertex_perm = G(tuple(triple))
+    fz_perm = [permute_factorization(vertex_perm, fz) for fz in factorizations]
+    fz_perm_cycles = H(fz_perm).cycle_tuples()
+    for fz_triple in fz_perm_cycles:
+        ablock = triple.list()
+        for fz in fz_triple:
+            ablock.append(factorization_numbers[fz])
+        blocks.append(sorted(ablock))
+</script></div>
+<p>There are now \(132\) blocks, which we can examine if we wish.</p>
+<div class="sage-compute"><script type="text/x-sage">blocks
+</script></div>
+<p>We can, of course, verify analytically that this construction creates a Steiner system, but we let Sage do the work instead and see that the parameters returned are as expected.</p>
+<div class="sage-compute"><script type="text/x-sage">B = BlockDesign(12, blocks)
+B.is_block_design()
+</script></div>
+<p>Note that the enabling arithmetic for this example is: \(12 = 6 + 6\) and \(132=2 + 15\cdot 3\cdot 2 + {6\choose 3}\cdot 2\).</p>
+<p>The automorphism group of a design (Steiner system) is a permutation of the points which carries blocks to blocks, and non-blocks to non-blocks.  The Steiner system \(S(5,\,6,\,12)\) is remarkable, in part because its automorphism group is the Mathieu group, \(M_{12}\).  This permutation group is highly transitive and is one of the first five sporadic simple groups discovered.  In particular, \(M_{12}\) is \(5\)-transitive, a fact you can verify in Sage by creating the group and examining a succession of orbits and stabilizers.</p>
+<div class="sage-compute"><script type="text/x-sage">M12 = MathieuGroup(12)
+M12
+</script></div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 4.1 </span>Verify that the Mathieu group, as implemented directly in Sage, is a \(5\)-transitive permutation group.</p>
+</div>
+<p>Sage claims to be able to build the automorphism group of this design, but the routine is broken and would likely produce permutations on \(144\) symbols (all vertices of the point-block incidence graph of the design).  The code below will alert us, through automated testing, when this situation improves.</p>
+<div class="sage-compute"><script type="text/x-sage">B.automorphism_group()
+</script></div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 4.2 </span>Analyze all \(12!=479\,001\,600\) permutations of the \(12\) points of the \(S(5,\,6,\,12)\) Steiner system and identify the \(95\,040\) permutations which preserve the blocks.  This may take a long time (perhaps an unreasonable amount of time).  To be more efficient, perhaps use the Sage combinatorics routines to build the permutations quickly (rather than the permutation group code), and try to move on to testing the next permutation just as soon as the current one fails to preserve some block.</p>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 4.3 </span>Build the point-block incidence graph of the \(S(5,\,6,\,12)\) Steiner system and construct the group of graph automorphisms.  For these permuations, isolate the permutations of the points of the design which are automorphisms of the design.  Use the experience to debug and fix Sage's automorphism group routine for designs.</p>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="heading">
+<span class="number">5</span> <span class="title">Duality</span>
+</div>
+<p>Shortly after we built the six factorizations of \(K_6\), we created a graphic which was another version of \(K_6\) with factorizations as vertices and factors labeling (coloring) edges.  This was possible, since as we also demonstrated above, every pair of factorizations have a single factor in common, and each factor is contained in exactly two factorizations.  This version of \(K_6\) is “dual” to the original \(K_6\), as we will describe in this section.</p>
+<p>Build a graph, \(Q\), whose vertices are the factorizations of \(K_6\), with two vertices adjacent if the factorizations have a factor in common.  The code below is a bit overblown, as we expect this graph to be isomorphic to \(K_6\).  To emphasize the situation, we will label the vertices of \(Q\) (factorizations) by using their names, the uppercase letters from the end of the alphabet.</p>
+<div class="sage-compute"><script type="text/x-sage">Q = Graph([(f1, f2) for f1, f2 in Subsets(factorizations, 2) if f1.intersection(f2).cardinality() == 1])
+Q.relabel(factorization_names)
+Q.is_isomorphic(graphs.CompleteGraph(6))
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">Q.plot(layout='circular')
+</script></div>
+<p>By construction, the factorizations of \(K_6\) are the vertices of \(Q\).  The factors of \(K_6\), by the discussion above, are in a bijective correspondence with the edges of \(Q\) (pairs of factorizations).  We illustrate these ideas with functions that accept the factorizations and factors of \(K_6\) (respectively) and return the vertices and edges of \(Q\).  To emphasize the nature of the situation, the trivial function that takes factorizations to vertices will return the factorization names provided by the Python dictionary <tt class="code">factorization_names</tt>.  We test these functions exhaustively.  Also, notice how the second function employs the first.</p>
+<div class="sage-compute"><script type="text/x-sage">def factorization2vertex(afactorization):
+    '''Returns a vertex of the dual graph determined by a factorization of the original graph'''
+    return factorization_names[afactorization]
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">[factorization2vertex(fz) for fz in factorizations]
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">def factor2edge(afactor):
+    '''Returns an edge of the dual graph determined by a factor of the original graph'''
+    endpoints = [fz for fz in factorizations if afactor in fz]
+    return Set([factorization2vertex(avertex) for avertex in endpoints])
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">[factor2edge(f) for f in factors]
+</script></div>
+<p>Now we describe a natural bijection between edges of \(K_6\) and factors of \(Q\).  Given an edge of \(K_6\), there remain four vertices not incident to this edge.  The subgraph induced by these four vertices (a complete graph on 4 vertices) contains three pairs of disjoint edges, which may be combined with the first edge to form the three edges of a factor of \(K_6\).  Each of these three factors of \(K_6\) is then associated with an edge of \(Q\).  Since these three factors are not pairwise disjoint, no two of the factors can be in the same factorization.  So the three factors determine three pairs of factorizations, and these six factorizations are different.  Thus, these three pairs of factorizations form a factor in the graph \(Q\).  So we begin with an edge of \(K_6\) and determine a factor of the dual, \(Q\).</p>
+<p>Here is the function, and the test.</p>
+<div class="sage-compute"><script type="text/x-sage">def edge2factor(anedge):
+    '''Returns a factor of the dual graph determined by an edge of the original graph'''
+    completions = [f for f in factors if anedge in f]
+    return [factor2edge(f) for f in completions]
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">[edge2factor(e) for e in edges]
+</script></div>
+<p>Finally, you might now expect a natural bijection between vertices of \(K_6\) and factorizations of \(Q\).  We will not disappoint.  Given a vertex of \(K_6\), there are five edges incident to this vertex.  No factor of \(K_6\) can contain two of these edges, since all the edges have a vertex in common.  Each edge determines a factor of \(Q\) as above.  These five factors of \(Q\) are disjoint, for if not, an edge common to two factors of \(Q\) would be associated with a factor of \(K_6\) that contained two of the five original edges of \(K_6\).  So a vertex of \(K_6\) determines five disjoint factors of \(Q\), a factorization of the dual, \(Q\).</p>
+<div class="sage-compute"><script type="text/x-sage">def vertex2factorization(avertex):
+    '''Returns the factorization of the dual graph determined by a vertex of the original graph'''
+    incident = [e for e in edges if avertex in e]
+    return [edge2factor(e) for e in incident]
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">[vertex2factorization(v) for v in vertices]
+</script></div>
+<p>So notice that we have computed the factors and factorizations of the dual graph \(Q\) by exploiting properties of vertices, edges, factors and factorizations in \(K_6\).  This is in contrast to computing factors and factorizations of \(Q\) with set partition routines, or maximal cliques in an appropriate graph.  The following table summarizes what we mean by saying that \(Q\) is the dual of \(K_6\).</p>
+<table class="plain-table">
+<thead>\(K_6\)\(Q\)Function</thead>
+<tbody>
+<tr>
+<td align="center">Factorization</td>
+<td align="center">Vertex</td>
+<td align="center"><tt class="code">factorization2vertex</tt></td>
+</tr>
+<tr>
+<td align="center">Factor</td>
+<td align="center">Edge</td>
+<td align="center"><tt class="code">factor2edge</tt></td>
+</tr>
+<tr>
+<td align="center">Edge</td>
+<td align="center">Factor</td>
+<td align="center"><tt class="code">edge2factor</tt></td>
+</tr>
+<tr>
+<td align="center">Vertex</td>
+<td align="center">Factorization</td>
+<td align="center"><tt class="code">vertex2factorization</tt></td>
+</tr>
+</tbody>
+<caption>Table 1: Factor and factorization correspondences<a class="label" name=""></a>
+</caption>
+</table>
+<p>Cameron and van Lint state the following theorem.</p>
+<div class="theorem">
+<a class="label" name=""></a><div class="statement"><p><span class="theorem-header">Theorem 5.1 </span>Six is the only natural number \(n\) for which there is a construction of \(n\) isomorphic objects on an \(n\)-set \(A\), invariant under all permutations of \(A\), but not naturally in one-to-one correspondence with the points of \(A\).</p></div>
+</div>
+<p>So here \(A\) is the set of six original vertices of \(K_6\), and the “\(n\) isomorphic objects” are the six factorizations of \(K_6\).  We saw in the section on group actions that each permutation of the vertex set of \(K_6\) creates a permutation of the factorizations.  While there is a one-to-one correspondence between vertices and factorizations, the correspondence is not trivial.  This theorem can be explained several ways, but perhaps the most concise is the category-theoretic statement that
+        <blockquote>The category whose objects are \(n\)-element sets and whose morphisms are bijections between them has a non-trivial functor to itself if and only if \(n=6\).</blockquote></p>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 5.2 </span>Begin with the graph \(Q\) having vertices labeled “W” through “Z” and construct the vertices, edges, factors and factorizations directly, using the methods employed for \(K_6\) at the start of this chapter.  Use your results, and equality testing of sets in Sage, to verify the exhaustive tests provided here.  (Notice that our “tests,” as given, rely on visual inspection, while this exercise suggests a much more rigorous approach.)</p>
+</div>
+<div class="exercise">
+<a class="label" name=""></a><p><span class="exercise-header">Exercise 5.3 </span>Create the graph \(Q\) again, along with its vertices, edges, factors and factorizations using the direct methods described in the previous exercise, but now begin with the vertices labeled with the actual factorizations of \(K_6\).  So, for example, an edge of this graph will be a \(2\)-set, whose elements are factorizations of \(K_6\) (each a 5-set of 3-sets of 2-sets).  Write and test the inverses of the four bijections above.  These will accept as input the (complicated) structures of \(Q\) and output the simpler structures of \(K_6\).</p>
+</div>
+</div>
+</div>
+</body>
+</html>
