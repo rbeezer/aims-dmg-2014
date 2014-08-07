@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--*                                    *-->
+<!--* Generated from MathBook XML source *-->
+<!--*                                    *-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIMS DMG Sage Demonstration 17</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['\\(','\\)']]},
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js"],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                         },
+        TagSide: "right",
+        TagIndent: ".8em"
+    },
+});
+</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><script src="http://sagecell.sagemath.org/static/jquery.min.js"></script><script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script><script>
+$(function () {
+    // Make *any* div with class 'sage-compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.sage-compute',
+                           linked: true,
+                           evalButtonText: 'Evaluate'});
+});
+    </script><script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script><link href="http://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://aimath.org/knowl.js"></script><link href="http://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="mathbook.css">
+</head>
+<body>
+<div style="display:none;">
+            \(\)
+            </div>
+<div class="article">
+<div class="heading">
+<div class="title">AIMS DMG Sage Demonstration 17</div>
+<div class="event">AIMS 2013-14: Designs, Matroids and Graphs</div>
+<div class="authorgroup">
+<div class="author-info">
+<div class="author-name">Rob Beezer</div>
+<div class="author-department"></div>
+<div class="author-institution">University of Puget Sound</div>
+<div class="author-email"></div>
+</div>
+<div class="author-info">
+<div class="author-name">Nancy Neudauer</div>
+<div class="author-department"></div>
+<div class="author-institution">Pacific University</div>
+<div class="author-email"></div>
+</div>
+</div>
+<div class="date">January 17, 2014</div>
+</div>
+<div class="section">
+<div class="heading">
+<span class="number">1</span> <span class="title">A Design that Yields a Good Nonlinear Code</span>
+</div>
+<p>We start with a design and finish with a code.  More specifically, the (unique) \(2-(11,5,2)\) design.  We build it with <em>nonzero</em> quadratic residues mod 11 (from a finite field). </p>
+<div class="sage-compute"><script type="text/x-sage">F = GF(11)
+quad_res = Set([x^2 for x in F if x != 0])
+quad_res
+</script></div>
+<p>Use as a difference set.</p>
+<div class="sage-compute"><script type="text/x-sage">blocks = [[x + y for y in quad_res] for x in F]
+blocks
+</script></div>
+<p>This is a \(2\)-design, with a transitive automorphism group.</p>
+<div class="sage-compute"><script type="text/x-sage">B = BlockDesign(11, blocks)
+B.is_block_design()
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">G = B.automorphism_group()
+G
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">G.is_transitive()
+</script></div>
+<p>We use the blocks to indicate the locations of \(1\)'s in a codeword, and we add one special codeword, the all \(1\)'s codeword.  We also drop the first coordinate of these vectors, so the codewords have length \(10\), not \(11\).</p>
+<p>Because the automorphism group is transitive, deleting any other coordinate would have the same effect.  Our computations will be easier if we force our codewords into a vector space over \(GF(2)\), so we set that up now.</p>
+<div class="sage-compute"><script type="text/x-sage">V = GF(2)^10
+</script></div>
+<div class="sage-compute"><script type="text/x-sage"># Add list with all elements
+# Will create all 1's codeword later
+blocks = blocks + [F.list()]
+blocks
+</script></div>
+<div class="sage-compute"><script type="text/x-sage">code = []
+for b in blocks:
+    codeword = [0]*11
+    for i in b:
+        codeword[i] = 1
+    # drop coordinate 0
+    # binary vectors
+    code.append(V(codeword[1:]))
+print Sequence(code, cr=True)
+</script></div>
+<p>The code should have a “cyclic” feel to it, as each codeword is very close to a shift of the previous one (except for the all 1's codeword).</p>
+<p>As this is not a linear code (it is not the kernel of a matrix, nor a subspace of \(GF(2)^{10}\)) to get the minimum distance we must compare <em>all</em> pairs of different codewords.  If we do not write this as a list comprehension, it takes six lines of code.</p>
+<div class="sage-compute"><script type="text/x-sage">distances = [len((u-v).nonzero_positions()) for u in code for v in code if u != v]
+</script></div>
+<p>We can scan through the pairwise distances to look for the smallest.</p>
+<div class="sage-compute"><script type="text/x-sage">distances
+</script></div>
+<p>Or have Sage do it for us.</p>
+<div class="sage-compute"><script type="text/x-sage">d = min(distances)
+</script></div>
+<p>Boom!</p>
+<p>So we have a code with minimum distance \(d=5=2(2)+1=2e+1\), which can therefore correct up to \(2\) simultaneous errors in a codeword of length \(10\).</p>
+<p>Suppose any given bit has a 99% chance of being corrupted.  We can correct 0 errors, 1 error, 2 errors and have an error-free transmission.  How often does this happen?</p>
+<div class="sage-compute"><script type="text/x-sage">p = 0.99
+p^10 + binomial(10,1)*p^9*(1-p)^1 + binomial(10,2)*p^8*(1-p)^2
+</script></div>
+<p>So \(2\) times in \(10,000\) we have more than two errors, and we cannot correct the mistake.  Is this good enough?  Depends.  Are you transmitting vacation photographs or financial transactions?</p>
+<p>We can detect up to 4 errors, however, and perhaps ask for a retransmission.  The probability of 4 or fewer errors is:</p>
+<div class="sage-compute"><script type="text/x-sage">p = 0.99
+sum([binomial(10,i)*p^(10-i)*(1-p)^i for i in range(0,d)])
+</script></div>
+<p>25 in a billion times, errors will go undetected.  </p>
+<p>What price do we pay for this redundancy?  We are using 10 bits of bandwidth to send one symbol out of \(12\) (we have just 12 codewords).  Two ways to view this — we could send \(2^{10}=1024\) symbols with 10 bits, or our 12 codewords require at most 4 bits since \(2^4=16\).  So we are using more than \(2.5\) times as much capacity as we would need if our communication medium was perfect.  The right factor to compute is:</p>
+<div class="sage-compute"><script type="text/x-sage">N(10/log(12, 2))
+</script></div>
+<p>One billion transmissions, \(10/\log_2(12)\) bits of content per transmission, 8 bits per byte, \(\left(2^{10}\right)^3=2^{30}\) bytes in a gigabyte, so we get 25 errors in the following number of gigabytes of <em>content</em>.</p>
+<div class="sage-compute"><script type="text/x-sage">((10^(9)*10)/(8*2^(30)))/N(10/log(12, 2))
+</script></div>
+</div>
+</div>
+</body>
+</html>
